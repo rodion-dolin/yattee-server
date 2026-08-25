@@ -897,6 +897,11 @@ def _recommended_videos_from_next(nxt: Dict[str, Any]) -> List[Dict[str, Any]]:
         if "compactVideoRenderer" in item:
             out.append(_compact_video_to_invidious(item["compactVideoRenderer"]))
             continue
+        if "lockupViewModel" in item:
+            converted = _lockup_video_view_model_to_invidious(item["lockupViewModel"])
+            if converted:
+                out.append(converted)
+            continue
         section = item.get("itemSectionRenderer", {})
         for content in section.get("contents", []):
             if "compactVideoRenderer" in content:
